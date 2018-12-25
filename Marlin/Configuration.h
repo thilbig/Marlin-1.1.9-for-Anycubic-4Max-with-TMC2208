@@ -81,7 +81,8 @@
 // User-specified version info of this build to display in [Pronterface, etc] terminal window during
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
-#define STRING_CONFIG_H_AUTHOR "(Shiyue Liu, V0.1)" // Who made the changes.
+//#define STRING_CONFIG_H_AUTHOR "(Shiyue Liu, V0.1)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(T.Hilbig, ANYCUBIC FourMax V0.1)" // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
 #define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
@@ -380,6 +381,12 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
+  // Original values from Anycubic:
+  //#define  DEFAULT_Kp 22.2
+  //#define  DEFAULT_Ki 1.08
+  //#define  DEFAULT_Kd 114
+  
+  // modified values by ??
   #define DEFAULT_Kp 12.76
   #define DEFAULT_Ki 0.54
   #define DEFAULT_Kd 75.53
@@ -481,6 +488,7 @@
  */
 
 #define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
+//#define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
 #define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
 
 //===========================================================================
@@ -608,6 +616,8 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
+// orignal values:
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 92.6 }
 #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 98 }
 
 /**
@@ -615,6 +625,8 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
+// orignal values:
+//#define DEFAULT_MAX_FEEDRATE          { 300, 300, 10, 25 }
 #define DEFAULT_MAX_FEEDRATE          { 300, 300, 10, 40 }
 
 /**
@@ -623,6 +635,8 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
+// orignal values:
+//#define DEFAULT_MAX_ACCELERATION      { 1500, 1500, 100, 10000 }
 #define DEFAULT_MAX_ACCELERATION      { 1500, 1500, 75, 7000 }
 
 /**
@@ -633,6 +647,11 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
+// original values:
+//#define DEFAULT_ACCELERATION          1500    // X, Y, Z and E acceleration for printing moves
+//#define DEFAULT_RETRACT_ACCELERATION  2000    // E acceleration for retracts
+//#define DEFAULT_TRAVEL_ACCELERATION   1500    // X, Y, Z acceleration for travel (non printing) moves
+
 #define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
 #define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
@@ -645,6 +664,12 @@
  * When changing speed and direction, if the difference is less than the
  * value set here, it may happen instantaneously.
  */
+// orignal values:
+//#define DEFAULT_XJERK                 11
+//#define DEFAULT_YJERK                 11
+//#define DEFAULT_ZJERK                  0.4
+//#define DEFAULT_EJERK                  10.0
+
 #define DEFAULT_XJERK                 10.0
 #define DEFAULT_YJERK                 10.0
 #define DEFAULT_ZJERK                  0.3
@@ -848,13 +873,21 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR true
-#define INVERT_Y_DIR true
-#define INVERT_Z_DIR true
+// original values:
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR false
+#define INVERT_Z_DIR false
+
+// T.H.: modified for TMC2208 / 2210: set to "true" without change the Trigorilla connectors
+//#define INVERT_X_DIR true
+//#define INVERT_Y_DIR true
+//#define INVERT_Z_DIR true
 
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
+// orignal value:
+//#define INVERT_E0_DIR false
 #define INVERT_E0_DIR true
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
@@ -1256,7 +1289,8 @@
 
 // Preheat Constants
 #define PREHEAT_1_TEMP_HOTEND 200
-#define PREHEAT_1_TEMP_BED     50
+//#define PREHEAT_1_TEMP_BED     50
+#define PREHEAT_1_TEMP_BED    60  // T.H.: better for PLA
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
 #define PREHEAT_2_TEMP_HOTEND 230
@@ -1375,6 +1409,7 @@
  * View the current statistics with M78.
  */
 //#define PRINTCOUNTER
+#define PRINTCOUNTER  // T.H.: enabled
 
 //=============================================================================
 //============================= LCD and SD support ============================
@@ -1393,7 +1428,8 @@
  *
  * :{ 'en':'English', 'an':'Aragonese', 'bg':'Bulgarian', 'ca':'Catalan', 'cn':'Chinese', 'cz':'Czech', 'cz_utf8':'Czech (UTF8)', 'de':'German', 'el':'Greek', 'el-gr':'Greek (Greece)', 'es':'Spanish', 'es_utf8':'Spanish (UTF8)', 'eu':'Basque-Euskera', 'fi':'Finnish', 'fr':'French', 'fr_utf8':'French (UTF8)', 'gl':'Galician', 'hr':'Croatian', 'it':'Italian', 'kana':'Japanese', 'kana_utf8':'Japanese (UTF8)', 'nl':'Dutch', 'pl':'Polish', 'pt':'Portuguese', 'pt-br':'Portuguese (Brazilian)', 'pt-br_utf8':'Portuguese (Brazilian UTF8)', 'pt_utf8':'Portuguese (UTF8)', 'ru':'Russian', 'sk_utf8':'Slovak (UTF8)', 'tr':'Turkish', 'uk':'Ukrainian', 'zh_CN':'Chinese (Simplified)', 'zh_TW':'Chinese (Taiwan)', 'test':'TEST' }
  */
-#define LCD_LANGUAGE en
+//#define LCD_LANGUAGE en
+#define LCD_LANGUAGE de // T.H.: fo German
 
 /**
  * LCD Character Set
